@@ -22,7 +22,7 @@ class PushNotificationService {
 
     Map<String, String> headerNotification = {
       "content-Type": "application/json",
-      "Authorization": serverKey,
+      "Authorization": "AAAAK49qr5I:APA91bHjA7yLr4JVJGBTwU13xVplyBugDXNZUMFBo1WS0-hCXy-3S1m_vcqjfO2MFUKkDtXbM-zQNhsZQiwmfUIUjO50SbepXJI73B3MtjP094Ufml8Lr4SDU4MDAZqp7ZSbodvnBj7K",
     };
 
     Map titleBodyNotification = {
@@ -34,7 +34,7 @@ class PushNotificationService {
       "click_action": "FLUTTER_NOTIFICATION_CLICK",
       "id": "1",
       "status": "done",
-      "tripID": tripID,
+      "tripID": tripID ?? "sssss",
     };
     Map bodyNotificationMap = {
       "notification": titleBodyNotification,

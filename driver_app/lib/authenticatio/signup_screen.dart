@@ -65,7 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     DatabaseReference userRef = FirebaseDatabase.instance
         .ref()
-        .child("Drivers")
+        .child("drivers")
         .child(userFirebase!.uid);
 
     Map car_details = {
@@ -276,7 +276,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       child: Text(
                         "SignUp",
-                        style: TextStyle(fontSize: 22),
+                        style: TextStyle(fontSize: 22,color:Colors.white),
                       )),
                 ),
               ]),

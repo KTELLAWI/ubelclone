@@ -289,10 +289,10 @@ class _NewTripPageState extends State<NewTripPage> {
   assignDriverDataTripINfo() async{
     Map<String,dynamic> driverDataMap = {
       "status": "accepted",
-      "driverId": FirebaseAuth.instance.currentUser!.uid,
+      "driverID": FirebaseAuth.instance.currentUser!.uid,
       "driverName": driverName,
       "driverPhone": driverPhone,
-      "driverPhoto": driverPhone,
+      "driverPhoto": driverphoto,
       "carDetails": carColor + " " + carModel + " " + carNumber,
     };
 
@@ -303,13 +303,13 @@ class _NewTripPageState extends State<NewTripPage> {
 
    await  FirebaseDatabase.instance
         .ref()
-        .child("triprequests")
+        .child("tripRequests")
         .child(widget.newTripDetailsInfo!.tripID!)
         .update(driverDataMap);
 
         await  FirebaseDatabase.instance
         .ref()
-        .child("triprequests")
+        .child("tripRequests")
         .child(widget.newTripDetailsInfo!.tripID!).child("driverLocation")
         .update(driverCurrentLocation);
   }

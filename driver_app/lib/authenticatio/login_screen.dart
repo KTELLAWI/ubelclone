@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       DatabaseReference userRef = FirebaseDatabase.instance
           .ref()
-          .child("Drivers")
+          .child("drivers")
           .child(userFirebase!.uid);
 
       userRef.once().then((snap) {
@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 0, vertical: 5),
                     ),
-                    child: Text("Login",style: TextStyle(fontSize: 22,),))),
+                    child: Text("Login",style: TextStyle(fontSize: 22,color:Colors.white),))),
               ]),
             ),
             TextButton(

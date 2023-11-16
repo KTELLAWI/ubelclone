@@ -11,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ride_app/global/global_var.dart';
 import 'package:ride_app/methods/map_theme_methods.dart';
 import 'package:ride_app/pushNotification/push_notification_system.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -91,9 +92,13 @@ class _HomePageState extends State<HomePage> {
     PushNotificationSystem notificationSystem = PushNotificationSystem();
     notificationSystem.generateDeviceToken();
     notificationSystem.startlisteningForNewNotification(context);
+       print("ddddddddddddddddddddddddddd");
   }
 
   retriveCurrentDriverInfo() async {
+     await Permission.notification.isDenied.then((valuOfPermissione) => {
+        if (valuOfPermissione) {Permission.notification.request()}});
+
     await FirebaseDatabase.instance
         .ref()
         .child("drivers")
@@ -103,9 +108,9 @@ class _HomePageState extends State<HomePage> {
       driverName = (data.snapshot.value as Map)['name'];
       driverPhone = (data.snapshot.value as Map)['phone'];
       driverphoto = (data.snapshot.value as Map)['photo'];
-      carColor = (data.snapshot.value as Map)["car_details"]['carColor'];
-      carModel = (data.snapshot.value as Map)["car_details"]['carModel'];
-      carNumber = (data.snapshot.value as Map)["car_details"]['carNumber'];
+      carColor = (data.snapshot.value as Map)["car_details"]['car_color'];
+      carModel = (data.snapshot.value as Map)["car_details"]['car_model'];
+      carNumber = (data.snapshot.value as Map)["car_details"]['car_number'];
     });
 
     initilaizePushNotification();
@@ -137,7 +142,7 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           Container(
-            height: 136,
+            height: 0,
             width: double.infinity,
             color: Colors.black54,
           ),
@@ -150,118 +155,123 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isDismissible: false,
-                          builder: (context) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.black87,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(16),
-                                      topRight: Radius.circular(16)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.amber,
-                                      blurRadius: 5,
-                                      spreadRadius: .3,
-                                      offset: Offset(.3, .3),
-                                    )
-                                  ]),
-                              height: 221,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 24, vertical: 18),
-                                child: Column(children: [
-                                  const SizedBox(
-                                    height: 11,
-                                  ),
-                                  Text(
-                                    !isDriverAvailable
-                                        ? "GO ONLINE NOW"
-                                        : "GO OFFLINE NOW",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 21,
-                                  ),
-                                  Text(
-                                    !isDriverAvailable
-                                        ? "You are about to go online, you will become available to receive trip requests from users"
-                                        : "you are about to go oofiline , you will stop receiving trip requests from users ",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 25,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text("Back"),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 16,
-                                      ),
-                                      Expanded(
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            if (!isDriverAvailable) {
-                                              goOnlineNow();
+                              initilaizePushNotification();
 
-                                              setAndGetLocationUpdate();
+                        // FirebaseAuth.instance.signOut();
+                        // showModalBottomSheet(
+                        //   backgroundColor:Colors.transparent,
+                        //   context: context,
+                        //   isDismissible: false,
+                        //   builder: (context) {
+                        //     return Container(
+                        //       decoration: BoxDecoration(
+                        //           color: Colors.black87,
+                        //           borderRadius: BorderRadius.only(
+                        //               topLeft: Radius.circular(50),
+                        //               topRight: Radius.circular(50)),
+                        //           boxShadow: [
+                        //             // BoxShadow(
+                        //             //   color: Colors.amber,
+                        //             //   blurRadius: 5,
+                        //             //   spreadRadius: .3,
+                        //             //   offset: Offset(.3, .3),
+                        //             // )
+                        //           ]),
+                        //       height: 250,
+                        //       child: Padding(
+                        //         padding: EdgeInsets.symmetric(
+                        //             horizontal: 24, vertical: 18),
+                        //         child: Column(children: [
+                        //           const SizedBox(
+                        //             height: 11,
+                        //           ),
+                        //           Text(
+                        //             !isDriverAvailable
+                        //                 ? "GO ONLINE NOW"
+                        //                 : "GO OFFLINE NOW",
+                        //             textAlign: TextAlign.center,
+                        //             style: TextStyle(
+                        //               color: Colors.white,
+                        //               fontSize: 22,
+                        //               fontWeight: FontWeight.bold,
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             height: 21,
+                        //           ),
+                        //           Text(
+                        //             !isDriverAvailable
+                        //                 ? "You are about to go online, you will become available to receive trip requests from users"
+                        //                 : "you are about to go oofiline , you will stop receiving trip requests from users ",
+                        //             textAlign: TextAlign.center,
+                        //             style: TextStyle(
+                        //               color: Colors.white,
+                        //               fontSize: 22,
+                        //               fontWeight: FontWeight.bold,
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             height: 25,
+                        //           ),
+                        //           Row(
+                        //             children: [
+                        //               Expanded(
+                        //                 child: ElevatedButton(
+                        //                   onPressed: () {
+                        //                     Navigator.pop(context);
+                        //                   },
+                        //                   child: Text("Back",style:TextStyle(color:Colors.white)),
+                        //                 ),
+                        //               ),
+                        //               SizedBox(
+                        //                 width: 16,
+                        //               ),
+                        //               Expanded(
+                        //                 child: ElevatedButton(
+                        //                   onPressed: () {
+                        //                     if (!isDriverAvailable) {
+                        //                       goOnlineNow();
 
-                                              Navigator.pop(context);
-                                              setState(() {
-                                                colorToShow = Colors.pink;
-                                                titleToShow = "GO OFFLINE NOW";
-                                                isDriverAvailable = true;
-                                              });
-                                            } else {
-                                              Navigator.pop(context);
-                                              setState(() {
-                                                colorToShow = Colors.green;
-                                                titleToShow = "GO ONLINE NOW";
-                                                isDriverAvailable = false;
-                                              });
-                                            }
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                titleToShow == "GO ONLINE NOW"
-                                                    ? Colors.green
-                                                    : Colors.pink,
-                                          ),
-                                          child: Text("Confirm"),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ]),
-                              ),
-                            );
-                          },
-                        );
+                        //                       setAndGetLocationUpdate();
+
+                        //                       Navigator.pop(context);
+                        //                       setState(() {
+                        //                         colorToShow = Colors.pink;
+                        //                         titleToShow = "GO OFFLINE NOW";
+                        //                         isDriverAvailable = true;
+                        //                       });
+                        //                     } else {
+                        //                       Navigator.pop(context);
+                        //                       setState(() {
+                        //                         colorToShow = Colors.green;
+                        //                         titleToShow = "GO ONLINE NOW";
+                        //                         isDriverAvailable = false;
+                        //                       });
+                        //                     }
+                        //                   },
+                        //                   style: ElevatedButton.styleFrom(
+                        //                     backgroundColor:
+                        //                         titleToShow == "GO ONLINE NOW"
+                        //                             ? Colors.green
+                        //                             : Colors.pink,
+                        //                   ),
+                        //                   child: Text("Confirm",style:TextStyle(color:Colors.white)),
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           )
+                        //         ]),
+                        //       ),
+                        //     );
+                        //   },
+                        // );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colorToShow,
                       ),
                       child: Text(
                         titleToShow,
+                        style:TextStyle(color:Colors.white),
                       ))
                 ],
               ))

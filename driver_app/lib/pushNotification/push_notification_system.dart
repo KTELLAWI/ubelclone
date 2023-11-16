@@ -10,6 +10,7 @@ import 'package:ride_app/global/global_var.dart';
 import 'package:ride_app/models/trip_details.dart';
 import 'package:ride_app/widgets/loading_dailog.dart';
 import 'package:ride_app/widgets/notification_dialog.dart';
+import 'package:ride_app/widgets/payment_dialog.dart';
 
 class PushNotificationSystem {
   FirebaseMessaging firebaseCloudMessageing = FirebaseMessaging.instance;
@@ -31,33 +32,36 @@ class PushNotificationSystem {
 
   startlisteningForNewNotification(BuildContext context) async {
     //// listen to notofoation and app is terminated
+ retrveTripRequestInfo("tripID", context);
+    // FirebaseMessaging.instance
+    //     .getInitialMessage()
+    //     .then((RemoteMessage? messageRemote) {
+    //        //print("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+     
+    //   if (messageRemote != null) {
+    //     String tripID = messageRemote.data['tripID'];
+    //     retrveTripRequestInfo(tripID, context);
+    //   }
+    // });
 
-    FirebaseMessaging.instance
-        .getInitialMessage()
-        .then((RemoteMessage? messageRemote) {
-      if (messageRemote != null) {
-        String tripID = messageRemote.data['tripID'];
-        retrveTripRequestInfo(tripID, context);
-      }
-    });
+    // //// foreground
 
-    //// foreground
+    // FirebaseMessaging.onMessage.listen((RemoteMessage? messageRemote) {
+    //   if (messageRemote != null) {
+    //    String tripID = messageRemote.data['tripID'];
+    //    retrveTripRequestInfo(tripID, context);
+    //   }
+    // });
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage? messageRemote) {
-      if (messageRemote != null) {
-        String tripID = messageRemote.data['tripID'];
-        retrveTripRequestInfo(tripID, context);
-      }
-    });
-
-    ///// running in Background
-    ///
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage? messageRemote) {
-      if (messageRemote != null) {
-        String tripID = messageRemote.data['tripID'];
-        retrveTripRequestInfo(tripID, context);
-      }
-    });
+    // ///// running in Background
+    // ///
+    // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage? messageRemote) {
+      
+    //   if (messageRemote != null) {
+    //     String tripID = messageRemote.data['tripID'];
+    //     retrveTripRequestInfo(tripID, context);
+    //   }
+    // });
   }
 
   retrveTripRequestInfo(String tripID, BuildContext context) {
@@ -69,35 +73,43 @@ class PushNotificationSystem {
     );
 
     DatabaseReference tripRequestRef =
-        FirebaseDatabase.instance.ref().child('tripRequests').child(tripID);
+        FirebaseDatabase.instance.ref().child('tripRequests').child("-NjNOG60CUUdvqXhLhZY");
     tripRequestRef.once().then((data) {
       Navigator.pop(context);
-      audioPlayer.open(Audio("assets/audio/"));
-      audioPlayer.play();
+     // audioPlayer.open(Audio("assets/audio/"));
+     // audioPlayer.play();
+     print("dddddddddd");
       TripDetails tripDetailsInfo = TripDetails();
-      tripDetailsInfo.pickUpLatlng = LatLng(
-          double.parse(
-              (data.snapshot.value! as Map)['pickUpLatLng']["latitude"]),
-          double.parse(
-              (data.snapshot.value! as Map)['pickUpLatLng']["longitude"]));
-      tripDetailsInfo.pickupAddress =
-          (data.snapshot.value! as Map)['pickUpAddress'];
-      tripDetailsInfo.dropOffLatlng = LatLng(
-          double.parse(
-              (data.snapshot.value! as Map)['dropOffLatLng']["latitude"]),
-          double.parse(
-              (data.snapshot.value! as Map)['dropOffLatLng']["longitude"]));
-      tripDetailsInfo.dropOffAddress =
-          (data.snapshot.value! as Map)['dropOffAddress'];
-      tripDetailsInfo.userName = (data.snapshot.value! as Map)['userName'];
-      tripDetailsInfo.userPhone = (data.snapshot.value! as Map)['userPhone'];
-      tripDetailsInfo.tripID = tripID;
+      tripDetailsInfo.pickUpLatlng = LatLng(42.000,10.000);
+      // LatLng(
+      //     double.parse(
+      //         (data.snapshot.value! as Map)['pickuplatlng']["latitude"]),
+      //     double.parse(
+      //         (data.snapshot.value! as Map)['pickuplatlng']["longitude"]));
+      tripDetailsInfo.pickupAddress ="AbuDabi China Mall";
+          (data.snapshot.value! as Map)['pickupAddress'];
+      tripDetailsInfo.dropOffLatlng =LatLng(42.000,10.000);
+      //  LatLng(
+      //     double.parse(
+      //         (data.snapshot.value! as Map)['dropoffLatLng']["latitude"]),
+      //     double.parse(
+      //         (data.snapshot.value! as Map)['dropOffLatLng']["longitude"]));
+      tripDetailsInfo.dropOffAddress ="AbuDabi China Mall";
+       //   (data.snapshot.value! as Map)['dropoffAddress'];
+      tripDetailsInfo.userName = "Ahmet Sherif";//(data.snapshot.value! as Map)['userName'];
+      tripDetailsInfo.userPhone = "00974 567892";//(data.snapshot.value! as Map)['userPhone'];
+      tripDetailsInfo.tripID = "-NjNOG60CUUdvqXhLhZY";//tripID;
+      print("cccccccccccccccccccc"+tripDetailsInfo.tripID.toString());
+       showDialog(
+      context: context,
+      builder: (context) => PaymentDialog(fareAmout: "50"),
+    );
 
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => NotificatioDailog(tripDetails: tripDetailsInfo),
-      );
+      // showDialog(
+      //   context: context,
+      //   barrierDismissible: false,
+      //   builder: (context) => NotificatioDailog(tripDetails: tripDetailsInfo),
+      // );
     });
   }
 }

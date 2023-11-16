@@ -21,15 +21,15 @@ class _PaymentDialogState extends State<PaymentDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(25),
       ),
       backgroundColor: Colors.black87,
       child: Container(
-          margin: EdgeInsets.all(5),
+          margin: EdgeInsets.all(0),
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.black87,
-            borderRadius: BorderRadius.circular(5),
+            color: Colors.amber,
+            borderRadius: BorderRadius.circular(25),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -39,14 +39,14 @@ class _PaymentDialogState extends State<PaymentDialog> {
               ),
               Text("Collect Cash",
                   style: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.black,
                   )),
               SizedBox(
                 height: 21,
               ),
               Divider(
                 height: 1.5,
-                color: Colors.white70,
+                color: Colors.black,
                 thickness: 1.0,
               ),
               SizedBox(
@@ -55,7 +55,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
               Text(
                 "\$${widget.fareAmout}",
                 style: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.black,
                     fontSize: 36,
                     fontWeight: FontWeight.bold),
               ),
@@ -65,16 +65,17 @@ class _PaymentDialogState extends State<PaymentDialog> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                    "this is fare Amout (\$${widget.fareAmout}) to be charged from user",
+                    "this is fare Amout (\$${widget.fareAmout}) to be charged from Rider",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.grey,
+                      color: Colors.black,
                     )),
               ),
               SizedBox(
                 height: 31,
               ),
               ElevatedButton(
+             
                   onPressed: () {
                     Navigator.pop(context);
                     Navigator.pop(context);
@@ -82,7 +83,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
                     Restart.restartApp();
                   },
                   style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.amber),
+                      ElevatedButton.styleFrom(backgroundColor: Colors.black),
                   child: Text("Collect cash")),
               SizedBox(
                 height: 41,

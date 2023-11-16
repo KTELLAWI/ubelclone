@@ -91,20 +91,25 @@ class _NotificatioDailogState extends State<NotificatioDailog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.black54,
+      backgroundColor: Colors.black,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
       ),
       child: Container(
         margin: const EdgeInsets.all(5),
         width: double.infinity,
-        decoration: BoxDecoration(color: Colors.grey),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: Colors.black
+          
+          )
+          ,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           const SizedBox(
             height: 30.0,
           ),
           Image.asset(
-            "assets/images/ccc.png",
+            "assets/images/carLogo3.jpg",
             width: 140,
           ),
           SizedBox(height: 16.0),
@@ -131,7 +136,7 @@ class _NotificatioDailogState extends State<NotificatioDailog> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Image.asset(
-                      "assets/images/initial.png",
+                      "assets/images/logo.png",
                       width: 16,
                       height: 16,
                     ),
@@ -155,7 +160,7 @@ class _NotificatioDailogState extends State<NotificatioDailog> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Image.asset(
-                      "assets/images/initial.png",
+                      "assets/images/logo.png",
                       width: 16,
                       height: 16,
                     ),

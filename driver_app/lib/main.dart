@@ -22,7 +22,7 @@ Future<void> main() async {
         if (valuOfPermissione) {Permission.locationWhenInUse.request()}
       });
       await Permission.notification.isDenied.then((valuOfPermissione) => {
-        if (valuOfPermissione) {Permission.locationWhenInUse.request()}
+        if (valuOfPermissione) {Permission.notification.request()}
       });
   runApp(const MyApp());
 }
